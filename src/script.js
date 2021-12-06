@@ -1,9 +1,12 @@
 import "./style.css";
 import * as THREE from "three";
-import { GreaterStencilFunc } from "three";
+
+const textureLoader = new THREE.TextureLoader();
 
 const canvas = document.querySelector(".webgl"); // App root
 const scene = new THREE.Scene(); // Scene of the action
+scene.background = textureLoader.load("./textures/background.jpg"); // Set background image
+
 const camera = new THREE.PerspectiveCamera( // Set camera
     75, // FOV
     window.innerWidth / window.innerHeight, // Ratio
@@ -13,23 +16,19 @@ const camera = new THREE.PerspectiveCamera( // Set camera
 // Positionning camera in X Y Z
 camera.position.x = 0;
 camera.position.y = 0;
-camera.position.z = 2;
+camera.position.z = 100;
 
 // Add camera to the scene
 scene.add(camera);
 
 // Geometry
-const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-
-// Material
-const cubeMaterial = new THREE.MeshBasicMaterial({
-    color: 0x00ff00,
+const earthGeometry = new THREE.SphereGeometry(12, 30, 30);
+const earthMap = textureLoader.load("./textures/earth.jpg");
+const earthMaterial = new THREE.MeshBasicMaterial({
+    map: earthMap,
 });
-
-// Assemble cube
-const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-scene.add(cube);
+const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+scene.add(earth);
 
 // Instantiate renderer with canvas
 const renderer = new THREE.WebGLRenderer({
@@ -44,9 +43,8 @@ const clock = new THREE.Clock();
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
 
-    // Add rotation to the cube for every new frame
-    // Rotation shift given by time diff
-    cube.rotation.y = elapsedTime;
+    // Earth rotation
+    earth.rotation.y = elapsedTime;
 
     renderer.render(scene, camera);
     requestAnimationFrame(tick); // Call tick every frame
