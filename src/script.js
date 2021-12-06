@@ -1,5 +1,6 @@
 import "./style.css";
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const textureLoader = new THREE.TextureLoader();
 
@@ -67,6 +68,12 @@ saturn.add(saturnPlanet);
 saturn.add(saturnRing);
 
 scene.add(saturn);
+
+// Controls for camera
+const controls = new OrbitControls(camera, canvas);
+controls.minDistance = 100;
+controls.maxDistance = 110;
+controls.enablePan = false; // Disable drag for camera position
 // Instantiate renderer with canvas
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
