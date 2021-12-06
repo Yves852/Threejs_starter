@@ -23,10 +23,9 @@ camera.position.z = 200;
 scene.add(camera);
 
 // Earth
-// Geometry
-const earthGeometry = new THREE.SphereGeometry(6, 30, 30);
 const earthMap = textureLoader.load("./textures/earth.jpg");
-const earthMaterial = new THREE.MeshBasicMaterial({
+const earthGeometry = new THREE.SphereGeometry(6, 30, 30);
+const earthMaterial = new THREE.MeshStandardMaterial({
     map: earthMap,
 });
 const earth = new THREE.Mesh(earthGeometry, earthMaterial);
@@ -44,9 +43,9 @@ const sun = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sun);
 
 // Mercury
-const mercuryGeometry = new THREE.SphereGeometry(2, 30, 30);
 const mercuryMap = textureLoader.load("./textures/mercury.jpg");
-const mercuryMaterial = new THREE.MeshBasicMaterial({
+const mercuryGeometry = new THREE.SphereGeometry(2, 30, 30);
+const mercuryMaterial = new THREE.MeshStandardMaterial({
     map: mercuryMap,
 });
 const mercury = new THREE.Mesh(mercuryGeometry, mercuryMaterial);
@@ -74,6 +73,15 @@ const controls = new OrbitControls(camera, canvas);
 controls.minDistance = 100;
 controls.maxDistance = 110;
 controls.enablePan = false; // Disable drag for camera position
+
+// Lights
+const ambientLight = new THREE.AmbientLight("white", 0.5);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight("white", 1);
+
+scene.add(pointLight);
+
 // Instantiate renderer with canvas
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
