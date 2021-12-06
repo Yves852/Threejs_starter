@@ -32,6 +32,6 @@
     "name": "threejs_starter",
     "description": "Courtesy of Bruno Simon of https://threejs-journey.xyz/",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "index.html",
     "author": ""
 }
