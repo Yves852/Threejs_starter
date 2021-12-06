@@ -11,7 +11,7 @@ const camera = new THREE.PerspectiveCamera( // Set camera
     75, // FOV
     window.innerWidth / window.innerHeight, // Ratio
     0.1, // Closest distance allowed for camera
-    150 // Farest distance allowed for camera
+    200 // Farest distance allowed for camera
 );
 // Positionning camera in X Y Z
 camera.position.x = 0;
@@ -42,6 +42,16 @@ const sun = new THREE.Mesh(sunGeometry, sunMaterial);
 
 scene.add(sun);
 
+// Mercury
+const mercuryGeometry = new THREE.SphereGeometry(2, 30, 30);
+const mercuryMap = textureLoader.load("./textures/mercury.jpg");
+const mercuryMaterial = new THREE.MeshBasicMaterial({
+    map: mercuryMap,
+});
+const mercury = new THREE.Mesh(mercuryGeometry, mercuryMaterial);
+
+scene.add(mercury);
+
 // Instantiate renderer with canvas
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -58,8 +68,13 @@ const tick = () => {
     // Earth rotation
     earth.rotation.y = elapsedTime * 2;
     // Rotate around sun
-    earth.position.x = Math.sin(elapsedTime) * 50;
-    earth.position.z = Math.cos(elapsedTime) * 50;
+    earth.position.x = Math.sin(elapsedTime * 0.2274) * 70;
+    earth.position.z = Math.cos(elapsedTime * 0.2274) * 70;
+
+    mercury.rotation.y = elapsedTime;
+
+    mercury.position.x = Math.sin(elapsedTime * 0.365) * 40;
+    mercury.position.z = Math.cos(elapsedTime * 0.365) * 40;
 
     renderer.render(scene, camera);
     requestAnimationFrame(tick); // Call tick every frame
