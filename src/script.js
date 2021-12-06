@@ -11,8 +11,8 @@ const camera = new THREE.PerspectiveCamera( // Set camera
     150 // Farest distance allowed for camera
 );
 // Positionning camera in X Y Z
-camera.position.y = 0;
 camera.position.x = 0;
+camera.position.y = 0;
 camera.position.z = 2;
 
 // Add camera to the scene
@@ -43,6 +43,11 @@ const clock = new THREE.Clock();
 
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
+
+    // Add rotation to the cube for every new frame
+    // Rotation shift given by time diff
+    cube.rotation.y = elapsedTime;
+
     renderer.render(scene, camera);
     requestAnimationFrame(tick); // Call tick every frame
 };
