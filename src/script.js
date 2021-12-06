@@ -21,14 +21,26 @@ camera.position.z = 100;
 // Add camera to the scene
 scene.add(camera);
 
+// Earth
 // Geometry
-const earthGeometry = new THREE.SphereGeometry(12, 30, 30);
+const earthGeometry = new THREE.SphereGeometry(6, 30, 30);
 const earthMap = textureLoader.load("./textures/earth.jpg");
 const earthMaterial = new THREE.MeshBasicMaterial({
     map: earthMap,
 });
 const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+
 scene.add(earth);
+
+// Sun
+const sunMap = textureLoader.load("./textures/sun.jpg");
+const sunGeometry = new THREE.SphereGeometry(20, 30, 30);
+const sunMaterial = new THREE.MeshMatcapMaterial({
+    map: sunMap,
+});
+const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+
+scene.add(sun);
 
 // Instantiate renderer with canvas
 const renderer = new THREE.WebGLRenderer({
@@ -44,7 +56,10 @@ const tick = () => {
     const elapsedTime = clock.getElapsedTime();
 
     // Earth rotation
-    earth.rotation.y = elapsedTime;
+    earth.rotation.y = elapsedTime * 2;
+    // Rotate around sun
+    earth.position.x = Math.sin(elapsedTime) * 50;
+    earth.position.z = Math.cos(elapsedTime) * 50;
 
     renderer.render(scene, camera);
     requestAnimationFrame(tick); // Call tick every frame
